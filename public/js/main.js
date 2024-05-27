@@ -10,7 +10,7 @@ async function getTrendingMoviesPreview() {
       movieContainer.classList.add('movie-container', 'bg-white', 'p-4', 'rounded', 'shadow');
   
       const movieImg = document.createElement('img');
-      movieImg.classList.add('w-1/2', 'h-48');
+      movieImg.classList.add('w-1/2', 'h-48',);
       movieImg.setAttribute('alt', movie.title);
       movieImg.setAttribute(
         'src',
@@ -34,7 +34,7 @@ async function getTrendingMoviesPreview() {
       
 
       const description= document.createElement('p');
-      description.classList.add('text-gray-600', 'mt-2');
+      description.classList.add('text-gray-600', 'mt-2', 'text-center');
       description.innerText=movie.overview;
 
       const id= document.createElement('h1');
