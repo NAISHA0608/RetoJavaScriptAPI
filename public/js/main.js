@@ -1,56 +1,52 @@
 async function getTrendingMoviesPreview() {
-    const res = await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=' + API_KEY);
-    const data = await res.json();
-  
-    const movies = data.results;
-    movies.forEach(movie => {
-      const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview')
-      
-      const movieContainer = document.createElement('div');
-      movieContainer.classList.add('movie-container', 'bg-white', 'p-4', 'rounded', 'shadow');
-  
-      const movieImg = document.createElement('img');
-      movieImg.classList.add('w-1/2', 'h-48',);
-      movieImg.setAttribute('alt', movie.title);
-      movieImg.setAttribute(
-        'src',
-        'https://image.tmdb.org/t/p/w300' + movie.poster_path,
-      );
+  const res = await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=' + API_KEY);
+  const data = await res.json();
 
-      const information= document.createElement('div');
-      information.classList.add('mt-4');
+  const movies = data.results;
+  const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview');
 
-      const fecha= document.createElement('h1');
-      fecha.classList.add('text-lg', 'font-bold', 'text-center');
-      fecha.innerText=movie.release_date;
+  movies.forEach(movie => {
+    const movieContainer = document.createElement('div');
+    movieContainer.classList.add('movie-container', 'bg-white', 'p-2', 'rounded', 'shadow', 'mb-4', 'max-w-xs', 'mx-auto');
 
-      const titulo= document.createElement('h3');
-      titulo.classList.add('text-lg', 'font-bold', 'text-center');
-      titulo.innerText=movie.title;
+    const movieImg = document.createElement('img');
+    movieImg.classList.add('w-1/2', 'h-48', 'object-cover', 'rounded-t');
+    movieImg.setAttribute('alt', movie.title);
+    movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path);
+    movieContainer.appendChild(movieImg);
 
-      const lengu= document.createElement('h1');
-      lengu.classList.add('text-lg', 'font-bold', 'text-center');
-      lengu.innerText=movie.original_language;
-      
+    const container = document.createElement('div');
+    container.classList.add('p-2', 'border-t', 'border-gray-200');
 
-      const description= document.createElement('p');
-      description.classList.add('text-gray-600', 'mt-2', 'text-center');
-      description.innerText=movie.overview;
+    const titulo = document.createElement('h3');
+    titulo.classList.add('text-base', 'font-bold', 'text-center', 'mb-1');
+    titulo.innerText = movie.title;
+    container.appendChild(titulo);
 
-      const id= document.createElement('h1');
-      id.classList.add('text-lg', 'font-bold', 'text-center');
-      id.innerText=movie.id;
+    const id = document.createElement('h1');
+    id.classList.add('text-xs', 'font-semibold', 'text-center', 'mb-1');
+    id.innerText = `ID: ${movie.id}`;
+    container.appendChild(id);
 
-  
-      movieContainer.appendChild(movieImg);
-      movieContainer.appendChild(information);
-      information.appendChild(titulo);
-      information.appendChild(id);
-      information.appendChild(fecha);
-      information.appendChild(lengu);
-      information.appendChild(description);
-      trendingPreviewMoviesContainer.appendChild(movieContainer);
-    });
-  }
-  
-  getTrendingMoviesPreview();
+    const lengu = document.createElement('h1');
+    lengu.classList.add('text-xs', 'font-semibold', 'text-center', 'mb-1');
+    lengu.innerText = `Language: ${movie.original_language}`;
+    container.appendChild(lengu);
+
+    const fecha = document.createElement('h1');
+    fecha.classList.add('text-xs', 'font-semibold', 'text-center', 'mb-1');
+    fecha.innerText = `Release Date: ${movie.release_date}`;
+    container.appendChild(fecha);
+
+    const description = document.createElement('p');
+    description.classList.add('text-xs', 'text-gray-600', 'text-center', 'mt-1');
+    description.setAttribute('style','max-width:300px; overflow: hidden; text.overflow: ellipsis');
+    description.innerText = movie.overview;
+    container.appendChild(description);
+
+    movieContainer.appendChild(container);
+    trendingPreviewMoviesContainer.appendChild(movieContainer);
+  });
+}
+
+getTrendingMoviesPreview();
